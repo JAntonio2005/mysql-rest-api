@@ -1,6 +1,13 @@
 require('dotenv').config();  // Cargar las variables de entorno
+const express = require('express');
 const mysql = require('mysql2');  // Usamos mysql2 para la conexión
-const express = require('express');  // Usamos express para crear el servidor
+const cors = require('cors');    // Importar cors
+
+// Crear el servidor Express
+const app = express();
+
+// Configurar CORS
+app.use(cors());  // Esto permite todas las solicitudes CORS. Si deseas limitar los orígenes, puedes configurarlo más detalladamente
 
 // Crear la conexión a MySQL usando la URL de conexión de .env
 const connection = mysql.createConnection(process.env.DEV_DATABASE_URL);
@@ -14,12 +21,8 @@ connection.connect((err) => {
   console.log('Conexión exitosa a la base de datos MySQL!');
 });
 
-// Crear el servidor Express
-const app = express();
-
 // Ruta para obtener los usuarios desde la base de datos
 app.get('/api/users', (req, res) => {
-  // Realizar una consulta para obtener los usuarios
   connection.query('SELECT * FROM users', (err, results) => {
     if (err) {
       console.error('Error al ejecutar la consulta:', err);
