@@ -5,7 +5,11 @@ const cors = require('cors');    // Importar cors
 
 // Crear el servidor Express
 const app = express();
-
+const corsOptions = {
+  origin: 'https://mysql-front-api.onrender.com', // Reemplaza con tu frontend
+  methods: 'GET,POST,PUT,DELETE',
+  allowedHeaders: 'Content-Type,Authorization',
+};
 // Configurar CORS
 app.use(cors());  // Esto permite todas las solicitudes CORS. Si deseas limitar los orígenes, puedes configurarlo más detalladamente
 
